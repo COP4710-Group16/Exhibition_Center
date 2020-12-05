@@ -1,83 +1,86 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Exhibition Center - Admin Home</title>
-    <style>
-      table, th, td{
-        border: 1px black solid
-      }
+    <head>
+        <link rel="stylesheet" href="css/main.css">
+        <meta charset="utf-8">
+        <title>Exhibition Center - Admin Home</title>
+    </head>
+    <body>
 
-      th, td{
-        padding: 3px
-      }
-    </style>
-  </head>
-  <body>
+        <div id="titlebar">
+            <h1>Welcome, User</h1><br>
 
-    <h1>Welcome, User</h1><br>
-
-    <p>
-      <a href="user_home.html">Home</a> -
-      <a href="#">Manage My Events</a> -
-      <a href="superadmin_page.html">Look-Up User</a> -
-      <a href="index.html">Log Out</a>
-    </p>
-
-    <br><br>
-
-    <section id="activeEvents">
-      <h2>Your Active Events</h2>
-      <br>
-      <table>
-        <tr>
-          <th>Event Title</th>
-          <th>Event URL</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-          <th>City</th>
-        </tr>
-
-        <div id="insertEvents here">
-
+            <p>
+                <a href="#">Home</a> -
+                <a href="admin_home.html">Manage My Events</a> -
+                <a href="superadmin_page.html">Look-Up User</a> -
+                <a href=" .html">Log Out</a>
+            </p>
         </div>
 
-      </table>
-    </section>
+        <section id="mainPage">
+            <section id="activeEvents">
+                <h2>Your Active Events</h2>
+                <br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Event Title</th>
+                            <th>Event URL</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>City</th>
+                        </tr>
+                    </thead>
 
-    <br><br>
+                    <tbody>
+                        <tr>
+                            <td>Title of the returned event</td>
+                            <td>URL of the website of the event</td>
+                            <td>start of the eventt</td>
+                            <td>end of the event</td>                            
+                            <td>city of the event</td>
 
-    <section id="newEvent">
+                        </tr>
+                    </tbody>
 
-      <h2>Create New Event</h2>
+                    <div id="insertEvents here">
 
-      <form class="" action="addEvent.e" method="post">
+                    </div>
 
-        <label for="eventTitle">Event Title: </label>
-        <input type="text" name="eventTitle" value="">
-        <br>
+                </table>
+            </section>
 
-        <label for="eventURL">Website for your Event: </label>
-        <input type="text" name="eventURL" value="">
-        <br>
+            <br><br>
 
-        <label for="eventStart">When does your event begin?: </label>
-        <input type="date" name="eventStart" value="">
-        <br>
+            <section id="newEvent">
 
-        <label for="eventEnd">When does your event end?: </label>
-        <input type="date" name="eventEnd" value="">
-        <br>
+                <h2>Create New Event</h2>
 
-        <label for="eventDesc">Event Description: </label><br>
-        <textarea name="eventDesc" rows="8" cols="80"></textarea>
-        <br>
+                <form class="" action="addEvent.e" method="post">
 
-        <input type="submit" name="" value="Create Event">
+                    <label for="eventTitle">Event Title: </label>
+                    <input type="text" name="eventTitle" value="">
 
-      </form>
+                    <label for="eventURL">Website for your Event: </label>
+                    <input type="text" name="eventURL" value="">
+                    
+                    <label for="eventURL">Event City: </label>
+                    <input type="text" name="eventCity" value="">
+                    
+                    <label for="eventStart">When does your event begin?: </label>
+                    <input type="date" name="eventStart" value="">
 
-    </section>
+                    <label for="eventEnd">When does your event end?: </label>
+                    <input type="date" name="eventEnd" value="">
 
-  </body>
+                    <label for="eventDesc">Event Description: </label>
+                    <textarea name="eventDesc" rows="8" cols="80"></textarea>
+                    <br>
+                    <input type="submit" name="" value="Create Event">
+
+                </form>
+            </section>
+        </section>
+    </body>
 </html>

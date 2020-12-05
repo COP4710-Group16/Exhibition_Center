@@ -1,0 +1,105 @@
+html, body 
+{
+    margin: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+}
+
+h1, body
+{
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+table
+{
+    margin: 6px;
+}
+
+table, th, td
+{
+    border: 1px black solid;
+    border-collapse: collapse;
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+th, td
+{
+    padding: 8px
+}
+
+#mainPage
+{
+    align-content: center;
+    display: inline-flex;
+    width: 90%;
+}
+
+#mainPage section
+{
+    padding: 4px;
+    border: 1px black solid;
+}
+
+#titlebar
+{
+    background-color: darkslategray;
+    text-align: center;
+    padding: 10px;
+}
+
+#titlebar a
+{
+    font-size: 30px;
+    color: aliceblue;
+}
+
+#searchByDate, #searchByLocation
+{
+    padding: 2px;
+}
+
+#searchByAdmin
+{
+    width: 70%;
+    float: left;
+}
+
+#searchByUser
+{
+    width: 30%;
+    float: right;
+}
+
+#activeEvents
+
+    width: 45%;
+    float: left;
+}
+
+#newEvent
+{
+    width: 55%;
+    float: right;
+}
+
+#newEvent form
+{
+    justify-content: flex-end;
+    margin: 20px;
+    text-align: left;
+    display: grid;
+    grid-template-columns: max-content max-content;
+    grid-gap: 5px;
+}
+
+#newEvent label
+{
+    padding-bottom: 4px;
+    text-align: right;
+    
+}

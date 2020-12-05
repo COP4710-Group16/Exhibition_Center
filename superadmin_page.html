@@ -1,99 +1,90 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Exhibition Center - Super Admin</title>
+    <head>
+        <link rel="stylesheet" href="css/main.css">
+        <meta charset="utf-8">
+        <title>Exhibition Center - Super Admin</title>
+    </head>
+    <body>
 
-    <style>
-      table, th, td{
-        border: 1px black solid
-      }
+        <div id="titlebar">
+            <h1>Welcome, Super Admin</h1><br>
 
-      th, td{
-        padding: 3px
-      }
-    </style>
+            <p>
+                <a href="#">Home</a> -
+                <a href="admin_home.html">Manage My Events</a> -
+                <a href="superadmin_page.html">Look-Up User</a> -
+                <a href=" .html">Log Out</a>
+            </p>
+        </div>
 
-  </head>
-  <body>
+        <br><br>
 
-    <h1>Welcome, Super Admin</h1><br>
+        <section id="mainPage">
+            <section id="searchByAdmin">
 
-    <p>
-      <a href="#">Home</a> -
-      <a href="admin_home.html">Manage My Events</a> -
-      <a href="superadmin_page.html">Look-Up User</a> -
-      <a href="index.html">Log Out</a>
-    </p>
+                <h2>Search Events by Admin</h2>
 
-    <br><br>
+                <form class="" action="fetch_events_by_admin.somethingorother" method="get">
 
-    <section id="searchByAdmin">
+                    <label for="adminName">Admin Name: </label>
+                    <input type="text" name="adminName" value="">
 
-      <h2>Search Events by Admin</h2>
+                    <input type="submit" name="searchByAdmin" value="Search Admins">
 
-      <form class="" action="fetch_events_by_admin.somethingorother" method="get">
+                </form>
 
-        <label for="adminName">Admin Name: </label>
-        <input type="text" name="adminName" value="">
+                <table id="adminSearchEvents">
+                    <thead>
+                        <tr>
+                        <th>Event Title</th>
+                        <th>Event URL</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Participate in this event?</th>
+                        </tr>
+                    </thead>
 
-        <input type="submit" name="searchByAdmin" value="Search Admins">
+                    <!-- format of all return queries -->
+                    <tbody>
+                    <tr>
+                        <td>Title of the returned event</td>
+                        <td>URL of the website of the event</td>
+                        <td>start of the eventt</td>
+                        <td>end of the event</td>
+                        <td><input type="button" name="participate" value="Participate"> or <input type="button" name="" value="Participating" disabled></td>
+                    </tr>
+                    </tbody>
+                </table>
 
-      </form>
+            </section>
 
-      <table id="adminSearchEvents">
-        <tr>
-          <th>Event Title</th>
-          <th>Event URL</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-          <th>Participate in this event?</th>
-        </tr>
+            <section id="searchByUser">
 
-        <!-- format of all return queries -->
+                <h2>Search Events by User</h2>
 
-        <tr>
-          <td>Title of the returned event</td>
-          <td>URL of the website of the event</td>
-          <td>start of the eventt</td>
-          <td>end of the event</td>
-          <td><input type="button" name="participate" value="Participate"> or <input type="button" name="" value="Participating" disabled></td>
-        </tr>
+                <form class="" action="fetch_events_by_user.lmao" method="get">
 
-      </table>
+                    <label for="userName">Search for user: </label>
+                    <input type="text" name="userName" required>
 
-    </section>
+                    <input type="submit" name="searchByUser" value="Search Users">
 
-    <br><br>
+                </form>
 
-    <section id="searchByUser">
+                <table id="userSearchEvents">
+                    <tr>
+                        <th>Event Title</th>
+                    </tr>
 
-      <h2>Search Events by User</h2>
+                    <!-- format of all return queries -->
 
-      <form class="" action="fetch_events_by_user.lmao" method="get">
+                    <tr>
+                        <td>Title of the returned event</td>
+                    </tr>
 
-        <label for="userName">Search for user: </label>
-        <input type="text" name="userName" required>
-
-        <input type="submit" name="searchByUser" value="Search Users">
-
-      </form>
-
-      <table id="userSearchEvents">
-        <tr>
-          <th>Event Title</th>
-        </tr>
-
-        <!-- format of all return queries -->
-
-        <tr>
-          <td>Title of the returned event</td>
-        </tr>
-        
-      </table>
-
-    </section>
-
-
-  </body>
+                </table>
+            </section>
+        </section>
+    </body>
 </html>
