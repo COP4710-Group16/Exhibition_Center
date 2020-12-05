@@ -1,41 +1,39 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
 <head>
   <meta charset="utf-8">
   <title>Exhibition Center - login</title>
+  <link rel="stylesheet" href="index_style.css">
 </head>
-
 <body>
 
-  <h1>Log in to Exhibition Center:</h1><br>
+  <h1>Welcome to Exhibition Center</h1><br>
 
   <form action="/something.php" method="post">
+    <div class="inForm">
+      <h4>Log In</h4>
+      <label for="Uusername">Username:</label><br>
+      <input type="text" name="Uusername" placeholder="Enter Username" required>
 
-    <label for="Uusername">Username:</label>
-    <input type="text" name="Uusername" value="" required>
+      <br>
 
-    <br>
+      <label for="Upassword">Password:</label><br>
+      <input type="password" name="Upassword" placeholder="Enter Password" required>
 
-    <label for="Upassword">Password:</label>
-    <input type="password" name="Upassword" value="" required>
+      <br>
 
-    <br>
-
-    <input type="submit" name="LogInButton" value="Log In">
-
+      <input type="submit" name="LogInButton" value="Log In">
+      <p>New to Exhibition Center? <a href="sign_up.html">Create a new account!</a></p>
+    </div>
   </form>
 
   <br>
 
   <!-- may need to replace the href of the link below to the URL of the page instead of the file location-->
 
-  <h1>New to Exhibition Center?</h1>
+
 
   <br>
 
-  <a href="sign_up.html">Create a new account!</a>
-
 </body>
-
 </html>
