@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Exhibition Center - User Home</title>
+
+    <style>
+      table, th, td{
+        border: 1px black solid
+      }
+
+      th, td{
+        padding: 3px
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <h1>Welcome, User</h1><br>
+
+    <p>
+      <a href="#">Home</a> -
+      <a href="admin_home.html">Manage My Events</a> -
+      <a href="superadmin_page.html">Look-Up User</a> -
+      <a href="index.html">Log Out</a>
+    </p>
+
+    <br><br>
+
+    <section id="searchByDate">
+
+      <h2>Search Events by Date</h2>
+
+      <form class="" action="fetch_events_by_date.somethingorother" method="get">
+
+        <label for="lowerDateRange">From: </label>
+        <input type="date" name="lowerDateRange" value="">
+
+        <label for="upperDateRange">To :</label>
+        <input type="date" name="upperDateRange" value="">
+
+        <input type="submit" name="searchEventsByDate" value="Search Events">
+
+      </form>
+
+      <table id="dateSearchEvents">
+        <tr>
+          <th>Event Title</th>
+          <th>Event URL</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Participate in this event?</th>
+        </tr>
+
+        <!-- format of all return queries -->
+
+        <tr>
+          <td>Title of the returned event</td>
+          <td>URL of the website of the event</td>
+          <td>start of the eventt</td>
+          <td>end of the event</td>
+          <td><input type="button" name="participate" value="Participate"> or <input type="button" name="" value="Participating" disabled></td>
+        </tr>
+
+      </table>
+
+    </section>
+
+    <br><br>
+
+    <section id="searchByLocation">
+
+      <h2>Search Events by Location</h2>
+
+      <form class="" action="fetch_events_by_location.lmao" method="get">
+
+        <label for="locationCity">Search for events in: </label>
+        <input type="text" name="locationCity" required>
+
+        <input type="submit" name="searchEventsByLocation" value="Search Events">
+
+      </form>
+
+      <table id="locationSearchEvents">
+        <tr>
+          <th>Event Title</th>
+          <th>Event URL</th>
+          <th>Location</th>
+          <th>Participate in this event?</th>
+        </tr>
+
+        <!-- format of all return queries -->
+
+        <tr>
+          <td>Title of the returned event</td>
+          <td>URL of the website of the event</td>
+          <td>Location of the event</td>
+          <td><input type="button" name="participate" value="Participate"> or <input type="button" name="" value="Participating" disabled></td>
+        </tr>
+        
+      </table>
+
+    </section>
+
+
+  </body>
+</html>
