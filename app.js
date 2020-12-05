@@ -1,8 +1,17 @@
 // import express to start sever from node.js 
 const express = require("express");
+const mysql = require("mysql");
 
 // start server 
 const app = express();
+
+//database needed from localhost/phpmyadmin 
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: '',
+})
 
 //request and responds 
 app.get("/", (req, res) => {
@@ -13,3 +22,4 @@ app.get("/", (req, res) => {
 app.listen(3020, () => {
     console.log("Server started correctly");
 })
+
