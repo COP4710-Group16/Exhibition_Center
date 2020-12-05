@@ -5,12 +5,21 @@ const mysql = require("mysql");
 // start server 
 const app = express();
 
-//database needed from localhost/phpmyadmin 
+//database is being pulled from phpmyAdmin
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: '',
+    database: 'exhibitionCenter',
+})
+
+//check if we connected 
+db.connect((error) => {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log("conncted...")
+    }
 })
 
 //request and responds 
