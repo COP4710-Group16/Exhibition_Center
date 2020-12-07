@@ -5,11 +5,12 @@ form{
 
 h1{
   text-align: center;
-
+  color: #F64C72;
 }
 
 h4{
   text-align: center;
+  color: #F64C72;
 }
 
 input[type=text], input[type=password] {
@@ -34,5 +35,17 @@ input[type=submit]{
 }
 
 p{
-  text-align: center
+  text-align: center;
+  color: white;
+}
+
+body{
+  background-image: url('Gradient-blue-background.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+label{
+  color: white;
 }
