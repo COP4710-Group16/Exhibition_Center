@@ -40,7 +40,7 @@ p{
 }
 
 body{
-  background-image: url('Gradient-blue-background.jpg');
+  background-image: url('../img/Gradient-blue-background.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;

@@ -1,4 +1,4 @@
-html, body 
+html, body
 {
     margin: 0;
     height: 100%;
@@ -11,6 +11,13 @@ h1, body
     padding: 0;
     margin: 0;
     text-align: center;
+}
+
+body{
+  background-image: url('../img/main_background.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 table
@@ -30,6 +37,14 @@ table, th, td
 th, td
 {
     padding: 8px
+}
+
+input{
+  background-color: #B3E5FC;
+}
+
+textarea{
+  background-color: #B3E5FC;
 }
 
 #mainPage
@@ -101,5 +116,5 @@ th, td
 {
     padding-bottom: 4px;
     text-align: right;
-    
+
 }
