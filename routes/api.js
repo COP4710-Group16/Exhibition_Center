@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require("mysql");
+const bcrypt = require('bcrypt');
 
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
@@ -107,10 +108,39 @@ router.get('/getEventsByUser', (req, res) =>
     LIKE "%` + req.query.key + '%"';
     db.query(sql, (err, rows, fields) => {
         if(err) throw err;
-        console.log(rows);
-        console.log(fields);
-        res.send(rows);
+        res.status(200).send(JSON.stringify({response:error.message}))
     });
 })
+
+router.post('/register', (req, res) => 
+{
+    let sql = `INSERT INTO users(username, password) VALUES (\"${req.username}\", \"${bcrypt.hashSync(req.password, 6)}\");`;
+
+    db.query(sql, (err, rows, fields) => {
+        if(err) throw err;
+    });
+
+    return res.status(200).send(JSON.stringify({response: "Account created"}));
+    
+})
+
+router.post('/login', (req, res) => 
+{
+    let sql = `SELECT userID, password FROM User WHERE ${req.username}`;
+
+    db.query(sql, (err, rows, fields) => {
+        if(err) throw err;
+        rows.array.forEach(element => {
+            if(bcrypt.compareSync(req.password, element.password))
+            {
+                return res.status(200).send(JSON.stringify({userID: element.userID}));
+            }
+        });
+    });
+
+    return res.status(200).send(JSON.stringify({response: "Account not found"}));
+})
+
+
 
 module.exports = router;
