@@ -30,10 +30,9 @@ db.connect((error) => {
 })
 
 //Initializes events and users tables
-app.get('/createtables', (req, res)=>
-{
-    let sql = 
-    `CREATE TABLE IF NOT EXISTS users (
+app.get('/createtables', (req, res) => {
+    let sql =
+        `CREATE TABLE IF NOT EXISTS users (
         userID int AUTO_INCREMENT NOT NULL,
         username VARCHAR(255) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
@@ -41,12 +40,12 @@ app.get('/createtables', (req, res)=>
     );`;
 
     db.query(sql, (err, result) => {
-        if(err) throw err;
+        if (err) throw err;
         console.log(result);
     });
 
-    sql = 
-    `CREATE TABLE IF NOT EXISTS events (
+    sql =
+        `CREATE TABLE IF NOT EXISTS events (
         eventID int AUTO_INCREMENT,
         eventTitle VARCHAR(255),
         eventDesc VARCHAR(255),
@@ -59,49 +58,46 @@ app.get('/createtables', (req, res)=>
     );`;
 
     db.query(sql, (err, result) => {
-        if(err) throw err;
+        if (err) throw err;
         console.log(result);
     });
 
-    sql = 
-    `CREATE TABLE IF NOT EXISTS participation (user INT REFERENCES users(userID), attended INT REFERENCES events(eventID));`;
+    sql =
+        `CREATE TABLE IF NOT EXISTS participation (user INT REFERENCES users(userID), attended INT REFERENCES events(eventID));`;
 
     db.query(sql, (err, result) => {
-        if(err) throw err;
+        if (err) throw err;
         console.log(result);
     });
-    
+
     res.send('Users & Events table created...');
 })
 
 //Creates a test event
-app.get('/addevent', (req, res)=>
-{
+app.get('/addevent', (req, res) => {
     let sql = `INSERT INTO events(eventTitle, eventDesc, eventURL, eventStartDate, eventEndDate, city, adminID) 
     VALUES ("Test Event", "This is not a real event", "notrealevent.com", "10-10-2020", "10-11-2020", "Orlando", "1");`;
     db.query(sql, (err, result) => {
-        if(err) throw err;
+        if (err) throw err;
         console.log(result);
         res.send('Test event created...');
     });
 })
 
 //Creates a test user
-app.get('/adduser', (req, res)=>
-{
+app.get('/adduser', (req, res) => {
     let sql = 'INSERT INTO users(username, password) VALUES ("testuser", "testpassword");';
     db.query(sql, (err, result) => {
-        if(err) throw err;
+        if (err) throw err;
         console.log(result);
         res.send('Test user created...');
     });
 })
 
-app.get('/queryEvents', (req, res) =>
-{
+app.get('/queryEvents', (req, res) => {
     let sql = 'SELECT * FROM events;';
     db.query(sql, (err, result) => {
-        if(err) throw err;
+        if (err) throw err;
         console.log(result);
         res.send('/public/admin_home.html');
     });
@@ -112,12 +108,12 @@ app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, './public')));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, './public', 'index.html'));
+    res.sendFile(path.join(__dirname, './public', 'index.html'));
 });
 
 // Just a test endpoint
 app.get('/user', (req, res) => {
-	res.send("Helloo")
+    res.send("Helloo")
 })
 
 // Serves the api

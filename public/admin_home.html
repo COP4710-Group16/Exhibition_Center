@@ -1,135 +1,75 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head>
-        <link rel="stylesheet" href="css/main.css">
-        <meta charset="utf-8">
-        <title>Exhibition Center - Admin Home</title>
-    </head>
-    <body>
 
-        <div id="titlebar">
-            <h1>Welcome, User</h1><br>
-            <p>
-                <a href="user_home.html">Home</a> -
-                <a href="admin_home.html">Manage My Events</a> - 
-                <a href="superadmin_page.html">Look-Up User</a> -
-                <a href="index.html">Log Out</a>
-            </p>
-        </div>
+<head>
+    <link rel="stylesheet" href="css/main.css">
+    <meta charset="utf-8">
+    <title>Exhibition Center - Admin Home</title>
+</head>
 
-        <section id="mainPage">
-            <section id="activeEvents">
-                <h2>Your Active Events</h2>
-                <br>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Event Title</th>
-                            <th>Event URL</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>City</th>
-                        </tr>
-                    </thead>
+<body>
 
-                    <tbody>
-                        <tr>
-                            <td>Title of the returned event</td>
-                            <td>URL of the website of the event</td>
-                            <td>start of the eventt</td>
-                            <td>end of the event</td>                            
-                            <td>city of the event</td>
+    <div id="titlebar">
+        <h1>Welcome, User</h1><br>
+        <p>
+            <a href="user_home.html">Home</a> -
+            <a href="admin_home.html">Manage My Events</a> -
+            <a href="superadmin_page.html">Look-Up User</a> -
+            <a href="index.html">Log Out</a>
+        </p>
+    </div>
 
-                        </tr>
-                    </tbody>
-
-                    <div id="insertEvents here">
-
-                    </div>
-
-                </table>
-            </section>
-
-            <br><br>
-
-            <section id="newEvent">
-
-                <h2>Create New Event</h2>
-
-                <form name="newEventForm" class="" onSubmit="return submitForm()" method="post">
-
-                    <label for="eventTitle">Event Title: </label>
-                    <input type="text" name="eventTitle" value="">
-
-                    <label for="eventURL">Website for your Event: </label>
-                    <input type="text" name="eventURL" value="">
-                    
-                    <label for="eventURL">Event City: </label>
-                    <input type="text" name="eventCity" value="">
-                    
-                    <label for="eventStart">When does your event begin?: </label>
-                    <input type="date" name="eventStart" value="">
-
-                    <label for="eventEnd">When does your event end?: </label>
-                    <input type="date" name="eventEnd" value="">
-
-                    <label for="eventDesc">Event Description: </label>
-                    <textarea name="eventDesc" rows="8" cols="80"></textarea>
-                    <br>
-                    <input type="submit" name="" value="Create Event">
-
-                </form>
-            </section>
+    <section id="mainPage">
+        <section id="activeEvents">
+            <h2>Your Active Events</h2>
+            <br>
+            <button onclick="addEvents()">Refresh Events</button>
+            <table id="resultsEvents">
+                <tr>
+                    <th>Event Title</th>
+                    <th>Event URL</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>City</th>
+                </tr>
+                <!-- <div id="insertEvents here">
+                </div> -->
+            </table>
         </section>
-    </body>
-    
-    
-    <script>
-        function submitForm()
-        {
-            if(document.forms["newEventForm"]["eventTitle"].value == "")
-            {
-                alert("Event Title is a required field.");
-                return false;
-            }
-            if(document.forms["newEventForm"]["eventURL"].value == "")
-            {
-                alert("Event URL is a required field.");
-                return false;
-            }
-            if(document.forms["newEventForm"]["eventCity"].value == "")
-            {
-                alert("Event City is a required field.");
-                return false;
-            }
-            if(document.forms["newEventForm"]["eventStart"].value == "")
-            {
-                alert("Start Date is a required field.");
-                return false;
-            }
-            if(document.forms["newEventForm"]["eventEnd"].value == "")
-            {
-                alert("End Date is a required field.");
-                return false;
-            }
-            if(document.forms["newEventForm"]["eventDesc"].value == "")
-            {
-                alert("Event Description is a required field.");
-                return false;
-            }
-            
-            var startDate = new Date(document.forms["newEventForm"]["eventStart"].value).getTime()           
-            var endDate = new Date(document.forms["newEventForm"]["eventEnd"].value).getTime()
-            
-            if(startDate > endDate)
-            {
-                alert("Event cannot end before it begins.");
-                return false;
-            }
-            
-            return true;
-        }
-        
-    </script>
-    
+        <br><br>
+
+        <section id="newEvent">
+
+            <h2>Create New Event</h2>
+
+            <form name="newEventForm" class="" onSubmit="return submitForm()">
+
+                <label for="eventTitle">Event Title: </label>
+                <input id="eventTitle" type="text" name="eventTitle" value="">
+
+                <label for="eventURL">Website for your Event: </label>
+                <input id="eventURL" type="text" name="eventURL" value="">
+
+                <label for="eventCity">Event City: </label>
+                <input id="eventCity" type="text" name="eventCity" value="">
+
+                <label for="eventStart">When does your event begin?: </label>
+                <input id="eventStart" type="date" name="eventStart" value="">
+
+                <label for="eventEnd">When does your event end?: </label>
+                <input id="eventEnd" type="date" name="eventEnd" value="">
+
+                <label for="eventDesc">Event Description: </label>
+                <textarea name="eventDesc" rows="8" cols="80"></textarea>
+                <br>
+                <input type="submit" name="" value="Create Event">
+
+            </form>
+        </section>
+    </section>
+</body>
+
+
+<script src="events.js"></script>
+
 </html>
