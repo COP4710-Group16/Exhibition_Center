@@ -141,7 +141,7 @@ router.post('/login', (req, res) =>
     return res.status(200).send(JSON.stringify({response: "Account not found"}));
 })
 
-router.post('/addAttend', (req, res) => 
+router.post('/addParticipation', (req, res) => 
 {
     let sql = `INSERT INTO Participation(userID, eventID) VALUES (\"${req.userID}\", \"${req.eventID}\");`;
 
@@ -149,11 +149,11 @@ router.post('/addAttend', (req, res) =>
         if(err) throw err;
     });
 
-    return res.status(200).send(JSON.stringify({response: "Now Attending"}));
+    return res.status(200).send(JSON.stringify({response: "Now Participating"}));
     
 })
 
-router.post('/removeAttend', (req, res) => 
+router.post('/removeParticipation', (req, res) => 
 {
     let sql = `DELETE FROM Participation WHERE userID=\"${req.userID}\" AND eventID=\"${req.eventID}\"`
 
@@ -161,7 +161,7 @@ router.post('/removeAttend', (req, res) =>
         if(err) throw err;
     });
 
-    return res.status(200).send(JSON.stringify({response: "Now Not Attending"}));
+    return res.status(200).send(JSON.stringify({response: "Now Not Participating"}));
     
 })
 
