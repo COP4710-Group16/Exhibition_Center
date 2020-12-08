@@ -1,11 +1,14 @@
 form{
-  border: 5px solid #a8c0c2;
+  border: 5px solid #5e8487;
+  background-color: #a8c0c2;
   margin: 0 20%
 }
 
 h1{
+
   text-align: center;
   color: #F64C72;
+
 }
 
 h4{
@@ -31,7 +34,7 @@ input[type=submit]{
   margin: 0 10%;
   padding: 5px 20px;
   width: 80%;
-  background-color: #a8c0c2;
+  background-color: #5e8487;
 }
 
 p{
