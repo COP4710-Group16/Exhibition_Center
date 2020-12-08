@@ -24,7 +24,7 @@
 
                 <h2>Search Events by Admin</h2>
 
-                <form class="" action="fetch_events_by_admin.somethingorother" method="get">
+                <form class="" action="" method="get">
 
                     <label for="adminName">Admin Name: </label>
                     <input type="text" name="adminName" value="">
@@ -36,22 +36,22 @@
                 <table id="adminSearchEvents">
                     <thead>
                         <tr>
+                            <th>Event Admin</th>
                             <th>Event Title</th>
                             <th>Event URL</th>
                             <th>Start Date</th>
                             <th>End Date</th>
-                            <th>Participate in this event?</th>
                         </tr>
                     </thead>
 
                     <!-- format of all return queries -->
                     <tbody>
                         <tr>
+                            <td>Username of event admin</td>
                             <td>Title of the returned event</td>
                             <td>URL of the website of the event</td>
                             <td>start of the eventt</td>
                             <td>end of the event</td>
-                            <td><input type="button" name="participate" value="Participate"> or <input type="button" name="" value="Participating" disabled></td>
                         </tr>
                     </tbody>
                 </table>

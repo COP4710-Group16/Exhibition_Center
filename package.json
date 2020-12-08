@@ -2,10 +2,7 @@
   "name": "Exhibition_Center",
   "version": "1.0.0",
   "description": "Group Project for COP 4710",
-<<<<<<< HEAD
   "main": "app.js",
-=======
->>>>>>> ee303d08b7ae34eda8d30471de24d98da8951f00
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"

@@ -32,19 +32,44 @@ db.connect((error) => {
 //Initializes events and users tables
 app.get('/createtables', (req, res)=>
 {
+    let sql = 
+    `CREATE TABLE IF NOT EXISTS users (
+        userID int AUTO_INCREMENT NOT NULL,
+        username VARCHAR(255) NOT NULL UNIQUE,
+        password VARCHAR(255) NOT NULL,
+        PRIMARY KEY (userID)
+    );`;
 
-    let sql = 'CREATE TABLE events(id int AUTO_INCREMENT, title VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, url VARCHAR(255) NOT NULL, startdate VARCHAR(10) NOT NULL, enddate VARCHAR(10) NOT NULL, address VARCHAR(255) NOT NULL, PRIMARY KEY (id))';
     db.query(sql, (err, result) => {
         if(err) throw err;
         console.log(result);
     });
 
-    sql = 'CREATE TABLE users(id int AUTO_INCREMENT, username VARCHAR(255) NOT NULL UNIQUE, password VARCHAR(255) NOT NULL, PRIMARY KEY (id))';
+    sql = 
+    `CREATE TABLE IF NOT EXISTS events (
+        eventID int AUTO_INCREMENT,
+        eventTitle VARCHAR(255),
+        eventDesc VARCHAR(255),
+        eventURL VARCHAR(255),
+        eventStartDate VARCHAR(10),
+        eventEndDate VARCHAR(10),
+        city VARCHAR(255),
+        PRIMARY KEY (eventID),
+        adminID INT REFERENCES users(userID )
+    );`;
+
     db.query(sql, (err, result) => {
         if(err) throw err;
         console.log(result);
     });
 
+    sql = 
+    `CREATE TABLE IF NOT EXISTS participation (user INT REFERENCES users(userID), attended INT REFERENCES events(eventID));`;
+
+    db.query(sql, (err, result) => {
+        if(err) throw err;
+        console.log(result);
+    });
     
     res.send('Users & Events table created...');
 })
@@ -52,10 +77,11 @@ app.get('/createtables', (req, res)=>
 //Creates a test event
 app.get('/addevent', (req, res)=>
 {
-    let sql = 'INSERT INTO events(title, description, url, startdate, enddate, address) VALUES ("Test Event", "This is not a real event", "notrealevent.com", "10-10-2020", "10-11-2020", "Orlando" )';
+    let sql = `INSERT INTO events(eventTitle, eventDesc, eventURL, eventStartDate, eventEndDate, city, adminID) 
+    VALUES ("Test Event", "This is not a real event", "notrealevent.com", "10-10-2020", "10-11-2020", "Orlando", "1");`;
     db.query(sql, (err, result) => {
         if(err) throw err;
-        //console.log(result);
+        console.log(result);
         res.send('Test event created...');
     });
 })
@@ -63,46 +89,23 @@ app.get('/addevent', (req, res)=>
 //Creates a test user
 app.get('/adduser', (req, res)=>
 {
-    let sql = 'INSERT INTO users(username, password) VALUES ("testuser", "testpassword")';
+    let sql = 'INSERT INTO users(username, password) VALUES ("testuser", "testpassword");';
     db.query(sql, (err, result) => {
         if(err) throw err;
-        //console.log(result);
+        console.log(result);
         res.send('Test user created...');
     });
 })
 
-
-// obtain public html files to render
-// const publicDirectory = path.join(__dirname, './public');
-// app.use(express.static(publicDirectory));
-
-// app.use('/', require('./routes/pages'));
-/*
-// obtain public html files to render
-const publicDirectory = path.join(__dirname, './public');
-app.use(express.static(publicDirectory));
-*/
-
-/*
-app.use(express.static(__dirname));
-app.use(express.static(path.join(__dirname, './public')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './public', 'index.html'));
-});
-*/
-
-/*
-if (process.env.NODE_ENV === 'production')
+app.get('/queryEvents', (req, res) =>
 {
-    app.use(express.static(__dirname));
-    app.use(express.static(path.join(__dirname, './public')));
-
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, './public', 'index.html'));
+    let sql = 'SELECT * FROM events;';
+    db.query(sql, (err, result) => {
+        if(err) throw err;
+        console.log(result);
+        res.send('/public/admin_home.html');
     });
-}
-*/
+})
 
 // Serves the pages
 app.use(express.static(__dirname));
@@ -117,11 +120,8 @@ app.get('/user', (req, res) => {
 	res.send("Helloo")
 })
 
-//app.get('/', require('./routes/pages'));
-
 // Serves the api
 app.use('/api', require('./routes/api'));
-
 
 //express listen for port
 app.listen(port, () => {
