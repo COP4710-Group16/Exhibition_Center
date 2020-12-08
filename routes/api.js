@@ -89,7 +89,7 @@ router.get('/getEventsByAdmin', (req, res) =>
 {
     let sql = `SELECT users.username, events.eventTitle, events.eventURL, events.eventStartDate, events.eventEndDate, events.city FROM events, users 
                 WHERE events.adminID = users.userID AND users.username 
-                LIKE "%` + req.query.key + '%"';
+                LIKE "%` + req.query.adminName + '%"';
 
     db.query(sql, (err, rows, fields) => {
         if(err) throw err;
@@ -102,7 +102,8 @@ router.get('/getEventsByAdmin', (req, res) =>
 router.get('/getEventsByUser', (req, res) => 
 {
     let userID = 1;
-    let sql = `SELECT users.username, events.eventTitle, events.eventURL, events.eventStartDate, events.eventEndDate, events.city FROM events, users, participation 
+    let sql = `SELECT users.username, events.eventTitle, events.eventURL, events.eventStartDate, events.eventEndDate, events.city 
+    FROM events, users, participation 
     WHERE events.eventID = participation.attended AND users.userID = participation.user AND users.username
     LIKE "%` + req.query.key + '%"';
     db.query(sql, (err, rows, fields) => {

@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
     <head>
         <link rel="stylesheet" href="css/main.css">
+        <script src="admin.js"></script>
         <meta charset="utf-8">
         <title>Exhibition Center - Super Admin</title>
     </head>
@@ -24,14 +25,11 @@
 
                 <h2>Search Events by Admin</h2>
 
-                <form class="" action="" method="get">
-
+                <div>
                     <label for="adminName">Admin Name: </label>
-                    <input type="text" name="adminName" value="">
-
-                    <input type="submit" name="searchByAdmin" value="Search Admins">
-
-                </form>
+                    <input id="adminSearchName" type="text" name="adminName" value="">
+                    <button type="submit" onclick="adminSearch()">Search Admins</button>
+                </div>
 
                 <table id="adminSearchEvents">
                     <thead>
@@ -41,19 +39,9 @@
                             <th>Event URL</th>
                             <th>Start Date</th>
                             <th>End Date</th>
+                            <th>City</th>
                         </tr>
                     </thead>
-
-                    <!-- format of all return queries -->
-                    <tbody>
-                        <tr>
-                            <td>Username of event admin</td>
-                            <td>Title of the returned event</td>
-                            <td>URL of the website of the event</td>
-                            <td>start of the eventt</td>
-                            <td>end of the event</td>
-                        </tr>
-                    </tbody>
                 </table>
 
             </section>
@@ -62,24 +50,17 @@
 
                 <h2>Search Events by User</h2>
 
-                <form class="" action="fetch_events_by_user.lmao" method="get">
+                <div class="" action="fetch_events_by_user.lmao" method="get">
 
-                    <label for="userName">Search for user: </label>
-                    <input type="text" name="userName" required>
+                    <label for="userSearchName">Search for user: </label>
+                    <input type="text" id="userSearchName" value=""">
+                    <button type="submit" onclick="userSearch()" >Search Users</button>
 
-                    <input type="submit" name="searchByUser" value="Search Users">
-
-                </form>
+                </div>
 
                 <table id="userSearchEvents">
                     <tr>
                         <th>Event Title</th>
-                    </tr>
-
-                    <!-- format of all return queries -->
-
-                    <tr>
-                        <td>Title of the returned event</td>
                     </tr>
 
                 </table>
