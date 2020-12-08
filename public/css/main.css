@@ -32,6 +32,7 @@ table, th, td
     align-self: center;
     margin-left: auto;
     margin-right: auto;
+    background-color: #a8c0c2
 }
 
 th, td
@@ -52,12 +53,15 @@ textarea{
     align-content: center;
     display: inline-flex;
     width: 90%;
+
 }
 
 #mainPage section
 {
     padding: 4px;
     border: 1px black solid;
+
+    background-color: #5e8487
 }
 
 #titlebar
