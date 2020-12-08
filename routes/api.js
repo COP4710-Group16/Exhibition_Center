@@ -102,8 +102,8 @@ router.get('/getEventsByAdmin', (req, res) =>
 router.get('/getEventsByUser', (req, res) => 
 {
     let userID = 1;
-    let sql = `SELECT events.eventID, events.eventTitle, events.eventDesc, events.eventURL, events.eventStartDate, events.eventEndDate, events.eventAddr, events.city FROM events, participation 
-    WHERE participation.userID = \"${req.userID}\" AND participation.eventID = events.eventID`;
+    let sql = `SELECT events.eventTitle, users.username FROM events, participation, users
+    WHERE participation.userID = \"${req.userID}\" AND participation.eventID = events.eventID AND users.userID = participation.userID`;
     db.query(sql, (err, rows, fields) => {
         if(err) throw err;
         return res.status(200).send(rows);
