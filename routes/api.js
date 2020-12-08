@@ -126,7 +126,7 @@ router.post('/register', (req, res) =>
 
 router.post('/login', (req, res) => 
 {
-    let sql = `SELECT userID, password FROM User WHERE ${req.username}`;
+    let sql = `SELECT userID, password FROM User WHERE username=${req.username}`;
 
     db.query(sql, (err, rows, fields) => {
         if(err) throw err;
@@ -141,6 +141,29 @@ router.post('/login', (req, res) =>
     return res.status(200).send(JSON.stringify({response: "Account not found"}));
 })
 
+router.post('/addAttend', (req, res) => 
+{
+    let sql = `INSERT INTO Participation(userID, eventID) VALUES (\"${req.userID}\", \"${req.eventID}\");`;
+
+    db.query(sql, (err, rows, fields) => {
+        if(err) throw err;
+    });
+
+    return res.status(200).send(JSON.stringify({response: "Now Attending"}));
+    
+})
+
+router.post('/removeAttend', (req, res) => 
+{
+    let sql = `DELETE FROM Participation WHERE userID=\"${req.userID}\" AND eventID=\"${req.eventID}\"`
+
+    db.query(sql, (err, rows, fields) => {
+        if(err) throw err;
+    });
+
+    return res.status(200).send(JSON.stringify({response: "Now Not Attending"}));
+    
+})
 
 
 module.exports = router;
