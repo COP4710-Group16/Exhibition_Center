@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require("mysql");
+const bcrypt = require('bcrypt');
 
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
@@ -84,7 +85,6 @@ router.get('/adduser', (req, res)=>
     });
 })
 
-//search by appending ?key=[KEYWORD] to end of url, replacing [KEYWORD] with search term
 router.get('/getEventsByAdmin', (req, res) => 
 {
     let sql = `SELECT users.username, events.eventTitle, events.eventURL, events.eventStartDate, events.eventEndDate, events.city FROM events, users 
@@ -102,16 +102,85 @@ router.get('/getEventsByAdmin', (req, res) =>
 router.get('/getEventsByUser', (req, res) => 
 {
     let userID = 1;
-    let sql = `SELECT users.username, events.eventTitle, events.eventURL, events.eventStartDate, events.eventEndDate, events.city 
-    FROM events, users, participation 
-    WHERE events.eventID = participation.attended AND users.userID = participation.user AND users.username
-    LIKE "%` + req.query.key + '%"';
+    let sql = `SELECT events.eventID, events.eventTitle, events.eventDesc, events.eventURL, events.eventStartDate, events.eventEndDate, events.eventAddr, events.city FROM events, participation 
+    WHERE participation.userID = \"${req.userID}\" AND participation.eventID = events.eventID`;
     db.query(sql, (err, rows, fields) => {
         if(err) throw err;
-        console.log(rows);
-        console.log(fields);
-        res.send(rows);
+        return res.status(200).send(rows);
     });
+
+    return res.status(200).send(JSON.stringify({response: "Unspecified error"}));
 })
+
+router.post('/register', (req, res) => 
+{
+    let sql = `INSERT INTO users(username, password) VALUES (\"${req.username}\", \"${bcrypt.hashSync(req.password, 6)}\");`;
+
+    db.query(sql, (err, rows, fields) => {
+        if(err) throw err;
+    });
+
+    return res.status(200).send(JSON.stringify({response: "Account created"}));
+    
+})
+
+router.post('/login', (req, res) => 
+{
+    let sql = `SELECT userID, password FROM user WHERE username=${req.username}`;
+
+    db.query(sql, (err, rows, fields) => {
+        if(err) throw err;
+        rows.array.forEach(element => {
+            if(bcrypt.compareSync(req.password, element.password))
+            {
+                return res.status(200).send(JSON.stringify({userID: element.userID}));
+            }
+        });
+    });
+
+    return res.status(200).send(JSON.stringify({response: "Account not found"}));
+})
+
+router.post('/getAttendance', (req, res) => 
+{
+    let sql = `SELECT events, password FROM user WHERE username=${req.username}`;
+
+    db.query(sql, (err, rows, fields) => {
+        if(err) throw err;
+        rows.array.forEach(element => {
+            if(bcrypt.compareSync(req.password, element.password))
+            {
+                return res.status(200).send(JSON.stringify({userID: element.userID}));
+            }
+        });
+    });
+
+    return res.status(200).send(JSON.stringify({response: "Account not found"}));
+})
+
+router.post('/addParticipation', (req, res) => 
+{
+    let sql = `INSERT INTO participation(userID, eventID) VALUES (\"${req.userID}\", \"${req.eventID}\");`;
+
+    db.query(sql, (err, rows, fields) => {
+        if(err) throw err;
+    });
+
+    return res.status(200).send(JSON.stringify({response: "Now Participating"}));
+    
+})
+
+router.post('/removeParticipation', (req, res) => 
+{
+    let sql = `DELETE FROM participation WHERE userID=\"${req.userID}\" AND eventID=\"${req.eventID}\"`
+
+    db.query(sql, (err, rows, fields) => {
+        if(err) throw err;
+    });
+
+    return res.status(200).send(JSON.stringify({response: "Now Not Participating"}));
+    
+})
+
 
 module.exports = router;
