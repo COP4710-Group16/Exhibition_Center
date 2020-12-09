@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="css/index_style.css">
 </head>
 
+<script src="register.js"></script>
+
 <body>
 
   <h1>Welcome to Exhibition Center</h1><br>
@@ -15,17 +17,17 @@
   <form class="" action="sign_up.whatever" method="post">
     <div class="inForm">
       <h4>Create a new account</h4>
-      <label for="newUsername">Username:</label>
-      <input type="text" name="newUsername" placeholder="Enter New Username" required>
+      <label for="inputUsername">Username:</label><br>
+      <input type="text" name="inputUsername" placeholder="Enter Username" id="inputUsername" required>
 
       <br>
 
-      <label for="newPassword">Password:</label>
-      <input type="password" name="newPassword" placeholder="Enter Password" required>
+      <label for="inputPassword">Password:</label><br>
+      <input type="password" name="inputPassword" placeholder="Enter Password" id="inputPassword" required>
 
       <br>
 
-      <input type="submit" name="" value="Sign Up">
+      <input type="button" name="SignUpButton" value="Log In" onclick="doRegister()">
       <p>Already a member? <a href="index.html">Sign in.</a></p>
     </form>
     </div>

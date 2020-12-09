@@ -1,6 +1,4 @@
-var userID = -1;
-
-function doLogin()
+function doRegister()
 {
     var usernameInput = document.getElementById("inputUsername").value;
     var passwordInput = document.getElementById("inputPassword").value;
@@ -9,7 +7,7 @@ function doLogin()
 
     var xhr = new XMLHttpRequest();
 
-    xhr.open("POST", "/api/login", true);
+    xhr.open("POST", "/api/register", true);
 
     //xhr.setRequestHeader('Access-Control-Allow-Origin', 'http://206.189.193.36/');
     //xhr.setRequestHeader('Access-Control-Allow-Credentials', 'true');
@@ -24,13 +22,7 @@ function doLogin()
         } 
         else if(xhr.status == 200)
         {
-            var jsonObject = JSON.parse(xhr.response);
-            userID = jsonObject.userID;
-            if(userID != -1)
-            {
-                saveCookie();
-                window.location.href = "user_home.html";
-            }
+            window.location.href = "sign_up.html";
         }
         else
         {
@@ -50,12 +42,4 @@ function doLogin()
         alert(`Received ${event.loaded} of ${event.total}`);
     };
     */
-}
-
-function saveCookie()
-{
-	var minutes = 20;
-	var date = new Date();
-    date.setTime(date.getTime()+(minutes*60*1000));	
-	document.cookie = "userid=" + userID + ";expires=" + date.toGMTString();
 }
