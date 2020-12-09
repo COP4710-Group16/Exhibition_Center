@@ -99,9 +99,8 @@ router.get('/getEventsByAdmin', (req, res) =>
     });
 })
 
-router.get('/getEventsByUser', (req, res) => 
+router.post('/getEventsByUser', (req, res) => 
 {
-    let userID = 1;
     let sql = `SELECT events.eventID, events.eventTitle, events.eventDesc, events.eventURL, events.eventStartDate, events.eventEndDate, events.eventAddr, events.city FROM events, participation 
     WHERE participation.userID = \"${req.userID}\" AND participation.eventID = events.eventID`;
     db.query(sql, (err, rows, fields) => {
@@ -138,7 +137,7 @@ router.post('/login', (req, res) =>
         });
     });
 
-    return res.status(200).send(JSON.stringify({response: "Account not found"}));
+    return res.status(200).send(JSON.stringify({userID: "-1"}));
 })
 
 router.post('/getAttendance', (req, res) => 
