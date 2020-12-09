@@ -72,15 +72,17 @@ function userSearchCallback(jsonData)
     data = jsonData;
     jsonData.forEach((event, index) =>
     {
-        insertUserRow(event.eventTitle);
+        insertUserRow(event.username, event.eventTitle);
     });
 }
 
-function insertUserRow(title)
+function insertUserRow(username, title)
 {
     var table = document.getElementById("userSearchEvents");
     var row = table.insertRow();
 
-    var titleCell = row.insertCell(0);
+    var usernameCell = row.insertCell(0);
+    var titleCell = row.insertCell(1);
+    usernameCell.innerHTML = username;
     titleCell.innerHTML = title;
 }
