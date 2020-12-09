@@ -7,6 +7,14 @@
         <title>Exhibition Center - Super Admin</title>
     </head>
     <body>
+        <script>
+        var id = getCookie("userid");
+            if(id != '1')
+            {
+                window.location.href = "http://localhost:3020/public/user_home.html";
+                alert("You are not super admin!");
+            }
+        </script>
 
         <div id="titlebar">
             <h1>Welcome, Super Admin</h1><br>

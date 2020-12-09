@@ -57,7 +57,7 @@ router.get('/createtables', (req, res) => {
         console.log(result);
     });
 
-    sql = `CREATE TABLE IF NOT EXISTS participation (user INT REFERENCES users(userID), attended INT REFERENCES events(eventID));`;
+    sql = `CREATE TABLE IF NOT EXISTS participation (user INT REFERENCES users(userID), attended INT REFERENCES events(eventID), PRIMARY KEY(user, attended));`;
 
     db.query(sql, (err, result) => {
         if (err) throw err;
@@ -72,7 +72,15 @@ router.post('/createEvent', (req, res) => {
     db.query(sql, (err, result) => {
         if (err) throw err;
         console.log(result);
-        res.send('Test event created...');
+    });
+
+    sql = `INSERT INTO participation(user, attended) 
+    SELECT users.userID, events.eventID
+    FROM users, events
+    WHERE users.userID = \"${req.body.adminID}\" AND events.eventTitle = \"${req.body.title}\" ;`;
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        console.log("Event Created");
     });
 })
 
@@ -139,7 +147,7 @@ router.post('/getEventsByParticipation',(req, res) =>
 {
   let sql = `SELECT events.eventTitle, events.eventURL, events.eventStartDate, events.eventEndDate, events.city, events.eventID
             FROM events, participation
-            WHERE participation.user = \"${req.body.userID}\" AND participation.attended = events.eventID`;
+            WHERE participation.user = \"${req.body.userID}\" OR events.adminID = \"${req.body.userID}\"`;
 
   db.query(sql, (err, rows, fields)=>
   {

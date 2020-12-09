@@ -21,7 +21,9 @@
 
     <section id="mainPage">
         <section id="activeEvents">
-            <h2>Your Active Events</h2>
+            <h2>Your Events</h2>
+            <input type="checkbox" id="activeEventsOnly" onclick="checkChanged()">
+            <label for="vehicle1"> Only Active Events</label><br>
             <br>
             <table id="resultsEvents">
                 <thead>
@@ -33,6 +35,9 @@
                         <th>City</th>
                     </tr>
             </thead>
+            <tbody id="tableBody">
+
+            </tbody>
         </table>
         </section>
         <br><br>

@@ -42,6 +42,52 @@ function submitForm() {
     return false;
 }
 
+function checkChanged()
+{
+    var body = document.getElementById("tableBody");
+
+
+    if(document.getElementById("activeEventsOnly").checked)
+    {
+        hideRows();
+    }
+    else
+    {
+        for (var i = 0; i < body.rows.length; i++)
+        {
+            var row = body.rows[i];
+            row.hidden = false;
+        }
+    }
+}
+
+function hideRows()
+{
+    var body = document.getElementById("tableBody");
+
+    for (var i = 0; i < body.rows.length; i++)
+    {
+        var row = body.rows[i];
+        var start = new Date( row.cells[2].innerHTML );
+        var end = new Date( row.cells[2].innerHTML );
+        var now = new Date();
+
+        row.hidden = (start > now || end < now);
+    }
+}
+
+function getFormattedDate(date) {
+    var year = date.getFullYear();
+  
+    var month = (1 + date.getMonth()).toString();
+    month = month.length > 1 ? month : '0' + month;
+  
+    var day = date.getDate().toString();
+    day = day.length > 1 ? day : '0' + day;
+    
+    return month + '/' + day + '/' + year;
+  }
+
 function createEvent(etitle, eurl, ecity, ebegin, eends, edescription)
 {
     var userID = getCookie("userid");
@@ -62,12 +108,19 @@ function addEvents()
 {
     var xmlHttp = new XMLHttpRequest();
     var cookie = getCookie("userid");
+    var ids = [];
+
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
         {
             xmlHttp.response.forEach((e)=>
             {
-                insertResultRow(e.eventTitle, e.eventURL, e.eventStartDate, e.eventEndDate, e.city);
+                if(!ids.includes(e.eventID))
+                {
+                    insertResultRow(e.eventTitle, e.eventURL, e.eventStartDate, e.eventEndDate, e.city);
+                }
+
+                ids.push(e.eventID);
             });
         }
     }
@@ -82,7 +135,7 @@ function addEvents()
 
 function insertResultRow(title, url, start, end, city) {
 
-    var table = document.getElementById('resultsEvents');
+    var table = document.getElementById('tableBody');
     var row = table.insertRow();
 
     var titleCell = row.insertCell(0);
@@ -93,8 +146,8 @@ function insertResultRow(title, url, start, end, city) {
 
     titleCell.innerHTML = title;
     urlCell.innerHTML = url;
-    startCell.innerHTML = start;
-    endCell.innerHTML = end;
+    startCell.innerHTML = getFormattedDate(new Date(start));
+    endCell.innerHTML = getFormattedDate(new Date(end));
     cityCell.innerHTML = city;
 }
 

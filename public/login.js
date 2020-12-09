@@ -31,6 +31,10 @@ function doLogin()
                 saveCookie();
                 window.location.href = "user_home.html";
             }
+            else
+            {
+                alert("Wrong password!");
+            }
         }
         else
         {
