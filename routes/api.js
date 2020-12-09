@@ -67,24 +67,12 @@ router.get('/createtables', (req, res) => {
     res.send('Tables created...');
 })
 
-//Creates a test event
-router.get('/addevent', (req, res) => {
-    let sql = `INSERT INTO events(eventTitle, eventDesc, eventURL, eventStartDate, eventEndDate, city, adminID) 
-    VALUES ("Test Event", "This is not a real event", "notrealevent.com", "10-10-2020", "10-11-2020", "Orlando", "1");`;
+router.post('/createEvent', (req, res) => {
+    let sql = `INSERT INTO events(eventTitle, eventDesc, eventURL, eventStartDate, eventEndDate, city, adminID) VALUES (\"${req.body.title}\", \"${req.body.description}\", \"${req.body.url}\", \"${req.body.begins}\", \"${req.body.ends}\", \"${req.body.city}\", \"${req.body.adminID}\");`;
     db.query(sql, (err, result) => {
         if (err) throw err;
         console.log(result);
         res.send('Test event created...');
-    });
-})
-
-//Creates a test user
-router.get('/adduser', (req, res) => {
-    let sql = 'INSERT INTO users(username, password) VALUES ("testuser", "testpassword");';
-    db.query(sql, (err, result) => {
-        if (err) throw err;
-        console.log(result);
-        res.send('Test user created...');
     });
 })
 
@@ -101,13 +89,13 @@ router.get('/getEventsByAdmin', (req, res) => {
     });
 })
 
-router.post('/getEventsByUser', (req, res) => {
+router.get('/getEventsByUser', (req, res) => {
     let userID = 1;
 
     let sql = `SELECT users.username, events.eventTitle
     FROM events, users, participation 
     WHERE events.eventID = participation.attended AND users.userID = participation.user AND users.username 
-    LIKE "%` + req.query.userName + '%"'
+    LIKE "%` + req.query.userName + '%"';
 
     db.query(sql, (err, rows, fields) => {
         if (err) throw err;
@@ -118,14 +106,47 @@ router.post('/getEventsByUser', (req, res) => {
 })
 
 router.get('/getEventsByLocation', (req, res) => {
-    let sql = `SELECT  events.eventTitle, events.eventURL, events.city FROM events, users`;
+    let sql = `SELECT events.eventTitle, events.eventURL, events.eventStartDate, events.eventEndDate, events.city, events.eventID
+    FROM events 
+    WHERE events.city LIKE "%` + req.query.city + '%"'
 
-    db.query(sql, (err, rows, fields) => {
-        if (err) throw err;
+    db.query(sql, (err, rows, fields)=>
+    {
+        if(err) throw (err);
         console.log(rows);
         console.log(fields);
         res.send(rows);
     });
+})
+
+// gets events that take place between two given dates
+router.get('/getEventsByDate',(req, res) =>
+{
+  let sql = `SELECT events.eventTitle, events.eventURL, events.eventStartDate, events.eventEndDate, events.city, events.eventID
+             FROM events WHERE events.eventStartDate >= \"${req.query.startDate}\" AND
+             events.eventEndDate <= \"${req.query.endDate}\" `;
+
+  db.query(sql, (err, rows, fields)=>
+  {
+    if(err) throw (err);
+    console.log(rows);
+    console.log(fields);
+    res.send(rows);
+  });
+})
+
+router.post('/getEventsByParticipation',(req, res) =>
+{
+  let sql = `SELECT events.eventTitle, events.eventURL, events.eventStartDate, events.eventEndDate, events.city, events.eventID
+            FROM events, participation
+            WHERE participation.user = \"${req.body.userID}\" AND participation.attended = events.eventID`;
+
+  db.query(sql, (err, rows, fields)=>
+  {
+    if(err) throw (err);
+    console.log(rows);
+    res.send(rows);
+  });
 })
 
 router.post('/register', (req, res) => {
@@ -142,22 +163,22 @@ router.post('/register', (req, res) => {
 
 router.post('/login', (req, res) => {
     console.log("login: " + req.body.username);
-    let sql = `SELECT userID, password FROM user WHERE username=${req.body.username}`;
+    let sql = `SELECT userID, password FROM users WHERE users.username = "${req.body.username}"`;
 
     db.query(sql, (err, rows, fields) => {
         if (err) throw err;
-        rows.array.forEach(element => {
+        rows.forEach(element => {
             if (bcrypt.compareSync(req.body.password, element.password)) {
                 return res.status(200).send(JSON.stringify({ userID: element.userID }));
             }
         });
     });
 
-    return res.status(200).send(JSON.stringify({ userID: "-1" }));
+    //return res.status(200).send(JSON.stringify({ userID: "-1" }));
 })
 
 router.post('/getAttendance', (req, res) => {
-    let sql = `SELECT events, password FROM user WHERE username=${req.body.username}`;
+    let sql = `SELECT events, password FROM users WHERE username=${req.body.username}`;
 
     db.query(sql, (err, rows, fields) => {
         if (err) throw err;
@@ -172,7 +193,7 @@ router.post('/getAttendance', (req, res) => {
 })
 
 router.post('/addParticipation', (req, res) => {
-    let sql = `INSERT INTO participation(userID, eventID) VALUES (\"${req.body.userID}\", \"${req.body.eventID}\");`;
+    let sql = `INSERT INTO participation(user, attended) VALUES (\"${req.body.userID}\", \"${req.body.eventID}\");`;
 
     db.query(sql, (err, rows, fields) => {
         if (err) throw err;
@@ -196,7 +217,7 @@ router.post('/removeParticipation', (req, res) => {
 
 router.post('/getParticipationByUserAndEvent', (req, res) =>
 {
-  let sql = `SELECT participation.userID, participation.eventID FROM participation WHERE \"${req.body.userID}\" = participation.user AND \"${req.body.eventID}\" = participation.attended`;
+  let sql = `SELECT participation.user, participation.attended FROM participation WHERE \"${req.body.userID}\" = participation.user AND \"${req.body.eventID}\" = participation.attended`;
 
   db.query(sql, (err, rows, fields)=>
   {
@@ -204,31 +225,7 @@ router.post('/getParticipationByUserAndEvent', (req, res) =>
     console.log(rows);
     console.log(fields);
 
-    rows.array.forEach((element) => {
-      if(element.userID === req.body.userID && element.eventID === req.body.eventID)
-      {
-       return res.status(200).send("true");
-      }
-    });
-
-    //res.send(rows);
-  });
-  return res.status(200).send("");
-})
-
-// gets events that take place between two given dates
-router.get('/getEventsByDate',(req, res) =>
-{
-  let sql = `SELECT events.eventTitle, events.eventURL, events.eventStartDate, events.eventEndDate, events.eventID
-             FROM events, WHERE events.eventStartDate >= \"${req.body.startDate}\" AND
-             events.eventEndDate <= \"${req.body.endDate}\" `;
-
-  db.query(sql, (err, rows, fields)=>
-  {
-    if(err) throw (err);
-    console.log(rows);
-    console.log(fields);
-    res.send(rows);
+    return res.send(JSON.stringify({ response : !(rows === undefined || rows.length == 0) }));
   });
 })
 

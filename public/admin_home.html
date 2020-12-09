@@ -23,18 +23,17 @@
         <section id="activeEvents">
             <h2>Your Active Events</h2>
             <br>
-            <button onclick="addEvents()">Refresh Events</button>
             <table id="resultsEvents">
-                <tr>
-                    <th>Event Title</th>
-                    <th>Event URL</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>City</th>
-                </tr>
-                <!-- <div id="insertEvents here">
-                </div> -->
-            </table>
+                <thead>
+                    <tr>
+                        <th>Event Title</th>
+                        <th>Event URL</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>City</th>
+                    </tr>
+            </thead>
+        </table>
         </section>
         <br><br>
 
@@ -42,7 +41,7 @@
 
             <h2>Create New Event</h2>
 
-            <form name="newEventForm" class="" onSubmit="return submitForm()">
+            <div name="newEventForm" >
 
                 <label for="eventTitle">Event Title: </label>
                 <input id="eventTitle" type="text" name="eventTitle" value="">
@@ -60,10 +59,9 @@
                 <input id="eventEnd" type="date" name="eventEnd" value="">
 
                 <label for="eventDesc">Event Description: </label>
-                <textarea name="eventDesc" rows="8" cols="80"></textarea>
+                <textarea id="eventDesc" rows="8" cols="80"></textarea>
                 <br>
-                <input type="submit" name="" value="Create Event">
-
+                <button  onclick="submitForm()">Create Event</button>
             </form>
         </section>
     </section>
