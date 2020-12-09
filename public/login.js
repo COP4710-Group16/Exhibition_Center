@@ -3,7 +3,6 @@ var email = "";
 
 function doLogin()
 {
-    alert("doing login");
     var usernameInput = document.getElementById("inputUsername").value;
     var passwordInput = document.getElementById("inputPassword").value;
 
@@ -31,7 +30,6 @@ function doLogin()
             if(userID != -1)
             {
                 saveCookie();
-                alert("redirect");
                 window.location.href = "user_home.html";
             }
         }
