@@ -20,7 +20,6 @@ function adminSearchCallback(jsonData)
         table.deleteRow(i);
     }
 
-    data = jsonData;
     jsonData.forEach((event, index) =>
     {
         insertAdminRow(event.username, event.eventTitle, event.eventURL, event.eventStartDate, event.eventEndDate, event.city);
@@ -49,14 +48,14 @@ function insertAdminRow(username, title, url, start, end, city)
 
 function userSearch()
 {
-    var name = document.getElementById("userSearchName").value;
+    var name = document.getElementById("userName").value;
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() { 
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
         userSearchCallback(xmlHttp.response);
     }
     xmlHttp.responseType = 'json';
-    xmlHttp.open( "GET", "/api/getEventsByAdmin?adminName="+name, true ); // false for synchronous request
+    xmlHttp.open( "GET", "/api/getEventsByUser?userName="+name, true ); // false for synchronous request
     xmlHttp.send( null );
 }
 
@@ -69,7 +68,6 @@ function userSearchCallback(jsonData)
         table.deleteRow(i);
     }
 
-    data = jsonData;
     jsonData.forEach((event, index) =>
     {
         insertUserRow(event.username, event.eventTitle);

@@ -102,14 +102,18 @@ router.get('/getEventsByAdmin', (req, res) =>
 router.get('/getEventsByUser', (req, res) => 
 {
     let userID = 1;
-    let sql = `SELECT events.eventTitle, users.username FROM events, participation, users
-    WHERE participation.userID = \"${req.userID}\" AND participation.eventID = events.eventID AND users.userID = participation.userID`;
+
+    let sql = `SELECT users.username, events.eventTitle
+    FROM events, users, participation 
+    WHERE events.eventID = participation.attended AND users.userID = participation.user AND users.username 
+    LIKE "%` + req.query.userName + '%"'
+
     db.query(sql, (err, rows, fields) => {
         if(err) throw err;
-        return res.status(200).send(rows);
+        console.log(rows);
+        console.log(fields);
+        res.send(rows);
     });
-
-    return res.status(200).send(JSON.stringify({response: "Unspecified error"}));
 })
 
 router.post('/register', (req, res) => 
