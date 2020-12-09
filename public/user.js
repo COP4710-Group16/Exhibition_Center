@@ -123,7 +123,7 @@ function insertDateRow(title, url, start, end, eventID)
   rowNode.appendChild(endNode);
   rowNode.appendChild(joinNode);
 
-  tID.appendChild(rowNode);
+  table.appendChild(rowNode);
 }
 
 function isParticipating(eventID) // TODO
