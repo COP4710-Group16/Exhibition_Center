@@ -186,4 +186,44 @@ router.post('/removeParticipation', (req, res) => {
 })
 
 
+router.post('/getParticipationByUserAndEvent', (req, res) =>
+{
+  let sql = `SELECT participation.userID, participation.eventID FROM participation WHERE \"${req.userID}\" = participation.user AND \"${req.eventID}\" = participation.attended`;
+
+  db.query(sql, (err, rows, fields)=>
+  {
+    if(err) throw (err);
+    console.log(rows);
+    console.log(fields);
+
+    rows.array.forEach((element) => {
+      if(element.userID === req.userID && element.eventID === req.eventID)
+      {
+       return res.status(200).send("true");
+      }
+    });
+
+    //res.send(rows);
+  });
+  return res.status(200).send("");
+})
+
+// gets events that take place between two given dates
+router.get('/getEventsByDate',(req, res) =>
+{
+  let sql = `SELECT events.eventTitle, events.eventURL, events.eventStartDate, events.eventEndDate, events,eventID
+             FROM events, WHERE events.eventStartDate >= \"${req.startDate}\" AND
+             events.eventEndDate <= \"${req.endDate}\" `;
+
+  db.query(sql, (err, rows, fields)=>
+  {
+    if(err) throw (err);
+    console.log(rows);
+    console.log(fields);
+    res.send(rows);
+  });
+})
+
+
+
 module.exports = router;
