@@ -27,17 +27,17 @@
 
             <h2>Search Events by Date</h2>
 
-            <form class="" action="fetch_events_by_date.somethingorother" method="get">
+            <div>
 
                 <label for="lowerDateRange">From: </label>
-                <input type="date" name="lowerDateRange" value="">
+                <input type="date" name="lowerDateRange" id="dateStartIn" value="">
 
                 <label for="upperDateRange">To :</label>
-                <input type="date" name="upperDateRange" value="">
+                <input type="date" name="upperDateRange" id="dateEndIn" value="">
 
-                <input type="submit" name="searchEventsByDate" value="Search Events">
+                <input type="submit" name="searchEventsByDate" onclick="dateSearch()" value="Search Events">
 
-            </form>
+           </div>
 
             <table id="dateSearchEvents">
                 <tr>
