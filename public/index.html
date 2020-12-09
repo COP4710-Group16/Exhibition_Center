@@ -5,24 +5,29 @@
   <title>Exhibition Center - login</title>
   <link rel="stylesheet" href="css/index_style.css">
 </head>
+
+<script src="login.js"></script>
+
+
+
 <body>
 
   <h1>Welcome to Exhibition Center</h1><br>
 
-  <form action="/something.php" method="post">
+  <form>
     <div class="inForm">
       <h4>Log In</h4>
-      <label for="Uusername">Username:</label><br>
-      <input type="text" name="Uusername" placeholder="Enter Username" required>
+      <label for="inputUsername">Username:</label><br>
+      <input type="text" name="inputUsername" placeholder="Enter Username" id="inputUsername" required>
 
       <br>
 
-      <label for="Upassword">Password:</label><br>
-      <input type="password" name="Upassword" placeholder="Enter Password" required>
+      <label for="inputPassword">Password:</label><br>
+      <input type="password" name="inputPassword" placeholder="Enter Password" id="inputPassword" required>
 
       <br>
 
-      <input type="submit" name="LogInButton" value="Log In">
+      <input type="button" name="LogInButton" value="Log In" onclick="doLogin()">
       <p>New to Exhibition Center? <a href="sign_up.html">Create a new account!</a></p>
     </div>
   </form>

@@ -99,7 +99,7 @@ router.get('/getEventsByAdmin', (req, res) =>
     });
 })
 
-router.get('/getEventsByUser', (req, res) => 
+router.post('/getEventsByUser', (req, res) => 
 {
     let userID = 1;
 
@@ -142,7 +142,7 @@ router.post('/login', (req, res) =>
         });
     });
 
-    return res.status(200).send(JSON.stringify({response: "Account not found"}));
+    return res.status(200).send(JSON.stringify({userID: "-1"}));
 })
 
 router.post('/getAttendance', (req, res) => 
