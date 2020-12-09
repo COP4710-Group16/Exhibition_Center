@@ -219,7 +219,7 @@ router.post('/getParticipationByUserAndEvent', (req, res) =>
 // gets events that take place between two given dates
 router.get('/getEventsByDate',(req, res) =>
 {
-  let sql = `SELECT events.eventTitle, events.eventURL, events.eventStartDate, events.eventEndDate, events,eventID
+  let sql = `SELECT events.eventTitle, events.eventURL, events.eventStartDate, events.eventEndDate, events.eventID
              FROM events, WHERE events.eventStartDate >= \"${req.body.startDate}\" AND
              events.eventEndDate <= \"${req.body.endDate}\" `;
 
