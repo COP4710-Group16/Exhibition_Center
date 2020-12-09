@@ -2,6 +2,12 @@ const express = require('express');
 const router = express.Router();
 const mysql = require("mysql");
 const bcrypt = require('bcrypt');
+const bodyParser = require('body-parser');
+
+router.use(bodyParser.urlencoded({
+	extended: true
+  }));
+  router.use(bodyParser.json());
 
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
@@ -123,7 +129,8 @@ router.get('/getEventsByLocation', (req, res) => {
 })
 
 router.post('/register', (req, res) => {
-    let sql = `INSERT INTO users(username, password) VALUES (\"${req.username}\", \"${bcrypt.hashSync(req.password, 6)}\");`;
+    console.log(req.body);
+    let sql = `INSERT INTO users(username, password) VALUES (\"${req.body.username}\", \"${bcrypt.hashSync(req.body.password, 6)}\");`;
 
     db.query(sql, (err, rows, fields) => {
         if (err) throw err;
@@ -134,12 +141,13 @@ router.post('/register', (req, res) => {
 })
 
 router.post('/login', (req, res) => {
-    let sql = `SELECT userID, password FROM user WHERE username=${req.username}`;
+    console.log("login: " + req.body.username);
+    let sql = `SELECT userID, password FROM user WHERE username=${req.body.username}`;
 
     db.query(sql, (err, rows, fields) => {
         if (err) throw err;
         rows.array.forEach(element => {
-            if (bcrypt.compareSync(req.password, element.password)) {
+            if (bcrypt.compareSync(req.body.password, element.password)) {
                 return res.status(200).send(JSON.stringify({ userID: element.userID }));
             }
         });
@@ -149,12 +157,12 @@ router.post('/login', (req, res) => {
 })
 
 router.post('/getAttendance', (req, res) => {
-    let sql = `SELECT events, password FROM user WHERE username=${req.username}`;
+    let sql = `SELECT events, password FROM user WHERE username=${req.body.username}`;
 
     db.query(sql, (err, rows, fields) => {
         if (err) throw err;
         rows.array.forEach(element => {
-            if (bcrypt.compareSync(req.password, element.password)) {
+            if (bcrypt.compareSync(req.body.password, element.password)) {
                 return res.status(200).send(JSON.stringify({ userID: element.userID }));
             }
         });
@@ -164,7 +172,7 @@ router.post('/getAttendance', (req, res) => {
 })
 
 router.post('/addParticipation', (req, res) => {
-    let sql = `INSERT INTO participation(userID, eventID) VALUES (\"${req.userID}\", \"${req.eventID}\");`;
+    let sql = `INSERT INTO participation(userID, eventID) VALUES (\"${req.body.userID}\", \"${req.body.eventID}\");`;
 
     db.query(sql, (err, rows, fields) => {
         if (err) throw err;
@@ -175,7 +183,7 @@ router.post('/addParticipation', (req, res) => {
 })
 
 router.post('/removeParticipation', (req, res) => {
-    let sql = `DELETE FROM participation WHERE userID=\"${req.userID}\" AND eventID=\"${req.eventID}\"`
+    let sql = `DELETE FROM participation WHERE userID=\"${req.body.userID}\" AND eventID=\"${req.body.eventID}\"`
 
     db.query(sql, (err, rows, fields) => {
         if (err) throw err;
@@ -188,7 +196,7 @@ router.post('/removeParticipation', (req, res) => {
 
 router.post('/getParticipationByUserAndEvent', (req, res) =>
 {
-  let sql = `SELECT participation.userID, participation.eventID FROM participation WHERE \"${req.userID}\" = participation.user AND \"${req.eventID}\" = participation.attended`;
+  let sql = `SELECT participation.userID, participation.eventID FROM participation WHERE \"${req.body.userID}\" = participation.user AND \"${req.body.eventID}\" = participation.attended`;
 
   db.query(sql, (err, rows, fields)=>
   {
@@ -197,7 +205,7 @@ router.post('/getParticipationByUserAndEvent', (req, res) =>
     console.log(fields);
 
     rows.array.forEach((element) => {
-      if(element.userID === req.userID && element.eventID === req.eventID)
+      if(element.userID === req.body.userID && element.eventID === req.body.eventID)
       {
        return res.status(200).send("true");
       }
@@ -212,8 +220,8 @@ router.post('/getParticipationByUserAndEvent', (req, res) =>
 router.get('/getEventsByDate',(req, res) =>
 {
   let sql = `SELECT events.eventTitle, events.eventURL, events.eventStartDate, events.eventEndDate, events,eventID
-             FROM events, WHERE events.eventStartDate >= \"${req.startDate}\" AND
-             events.eventEndDate <= \"${req.endDate}\" `;
+             FROM events, WHERE events.eventStartDate >= \"${req.body.startDate}\" AND
+             events.eventEndDate <= \"${req.body.endDate}\" `;
 
   db.query(sql, (err, rows, fields)=>
   {
