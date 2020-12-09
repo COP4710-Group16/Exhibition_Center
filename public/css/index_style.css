@@ -8,12 +8,14 @@ h1{
 
   text-align: center;
   color: #F64C72;
+  font-size: 350%;
 
 }
 
 h4{
   text-align: center;
   color: #F64C72;
+  font-size: 150%;
 }
 
 input[type=text], input[type=password] {

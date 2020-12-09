@@ -13,6 +13,14 @@ h1, body
     text-align: center;
 }
 
+h1{
+  font-family: 'Times New Roman', serif;
+}
+
+h2{
+  font-family: Georgia, sans-serif;
+}
+
 body{
   background-image: url('../img/main_background.jpg');
   background-repeat: no-repeat;
@@ -60,7 +68,6 @@ textarea{
 {
     padding: 4px;
     border: 1px black solid;
-
     background-color: #5e8487
 }
 
